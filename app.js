@@ -1,40 +1,47 @@
 // Computer Choice
 function getComputerChoice() {
-  // Calculating Random Choice
   const choices = ["rock", "paper", "scissors"];
   const random = Math.floor(Math.random() * choices.length);
-  // Returning Random Choice
+
   return choices[random].toUpperCase();
 }
 
 // PlayGame function
 function playRound(playerSelection, computerSelection) {
-  // Case insensitive playerSelection
-  const insensitive = playerSelection.toUpperCase();
-  if (insensitive === "ROCK" && computerSelection === "SCISSORS") {
-    console.log(
-      `You Win! Player: ${insensitive} beats Computer: ${computerSelection}`
-    );
-  } else if (insensitive === "PAPER" && computerSelection === "ROCK") {
-    console.log(
-      `You Win! Player: ${insensitive} beats Computer: ${computerSelection}`
-    );
-  } else if (insensitive === "SCISSORS" && computerSelection === "PAPER") {
-    console.log(
-      `You Win! Player: ${insensitive} beats Computer: ${computerSelection}`
-    );
-  } else if (insensitive === computerSelection) {
-    console.log(
-      `Draw! Player: ${insensitive} draws Computer: ${computerSelection}`
-    );
+  let winner = `You Win! Player: ${playerSelection} beats Computer: ${computerSelection}`;
+  // Conditions for Winning
+  if (playerSelection === "ROCK" && computerSelection === "SCISSORS") {
+    return winner;
+  } else if (playerSelection === "PAPER" && computerSelection === "ROCK") {
+    return winner;
+  } else if (playerSelection === "SCISSORS" && computerSelection === "PAPER") {
+    return winner;
+  } else if (playerSelection === computerSelection) {
+    return `Draw! Player: ${playerSelection} draws Computer: ${computerSelection}`;
   } else {
-    console.log(
-      `You Lose! Computer: ${computerSelection} beats Player: ${insensitive}`
-    );
+    return `You Lose! Computer: ${computerSelection} beats Player: ${playerSelection}`;
   }
 }
 
-const playerChoice = "Paper";
-const computerChoice = getComputerChoice();
+// Score Object
+let score = {
+  playerScore: 0,
+  computerScore: 0,
+};
 
-playRound(playerChoice, computerChoice);
+// Start Game Funtion
+function game() {
+  for (let i = 0; i < 5; i++) {
+    let playerChoice = prompt("Rock, Paper, Scissors ?");
+    const computerChoice = getComputerChoice();
+
+    if (playerChoice === null) {
+      alert("Please enter a choice.");
+      return;
+    } else {
+      playerChoice = playerChoice.toUpperCase();
+    }
+  }
+}
+
+game();
