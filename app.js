@@ -7,20 +7,6 @@ function getComputerChoice() {
   return choices[random].toUpperCase();
 }
 
-// if playerselection is Rock and computerSelection is Scissors
-//          show rock beats scissors
-
-// if playerselection is Paper and computerSelection is Rock
-//          show Paper beats Rock
-
-// if playerselection is Scissors and computerSelection is Paper
-//          show Scissors beats Paper
-
-// if playerselection === computerSelection
-//          show Draw
-
-// else  show computerChoice beats PlayerChoice
-
 // PlayGame function
 function playRound(playerSelection, computerSelection) {
   // Case insensitive playerSelection
