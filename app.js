@@ -1,9 +1,8 @@
 // Computer Choice
 function getComputerChoice() {
-  const choices = ["rock", "paper", "scissors"];
+  const choices = ["Rock", "Paper", "Scissors"];
   const random = Math.floor(Math.random() * choices.length);
-
-  return choices[random].toUpperCase();
+  return choices[random];
 }
 
 // Score Object
@@ -12,62 +11,61 @@ let score = {
   computerScore: 0,
 };
 
-// PlayGame function
 function playRound(playerSelection, computerSelection) {
-  let winner = `You Win! Player: ${playerSelection} beats Computer: ${computerSelection}`;
   // Conditions for Winning
-  if (playerSelection === "ROCK" && computerSelection === "SCISSORS") {
+  if (playerSelection === "Rock" && computerSelection === "Scissors") {
     score.playerScore += 1;
-    console.log(winner);
-  } else if (playerSelection === "PAPER" && computerSelection === "ROCK") {
+  } else if (playerSelection === "Paper" && computerSelection === "Rock") {
     score.playerScore += 1;
-    console.log(winner);
-  } else if (playerSelection === "SCISSORS" && computerSelection === "PAPER") {
+  } else if (playerSelection === "Scissors" && computerSelection === "Paper") {
     score.playerScore += 1;
-    console.log(winner);
   } else if (playerSelection === computerSelection) {
     score.playerScore += 0;
-    console.log(
-      `Draw! Player: ${playerSelection} draws Computer: ${computerSelection}`
-    );
   } else {
     score.computerScore += 1;
-    console.log(
-      `You Lose! Computer: ${computerSelection} beats Player: ${playerSelection}`
-    );
   }
 }
 
-function scoreValidation(pScore, cScore) {
-  if (pScore > cScore) {
-    console.log(
-      `You Won The Game. Player Score: ${pScore} / Computer Score: ${cScore}`
-    );
-  } else if (pScore < cScore) {
-    console.log(
-      `You Lost The Game. Computer Score: ${cScore} / Player Score: ${pScore}`
-    );
-  } else {
-    console.log(`Draw. Player Score: ${pScore} / Computer Score: ${cScore}`);
+// Score Validation
+function scoreValidation() {
+  const winner = document.querySelector(".winner");
+  if (score.playerScore === 5) {
+    winner.innerText = "You Win!!!";
+  } else if (score.computerScore === 5) {
+    winner.innerText = "You Loseee :(";
   }
 }
 
-// Start Game Funtion
-function game() {
-  for (let i = 0; i < 5; i++) {
-    let playerChoice = prompt("Rock, Paper, Scissors ?");
-    const computerChoice = getComputerChoice();
+const rpsBtns = document.querySelectorAll(".RPS");
 
-    if (playerChoice === null) {
-      alert("Please enter a choice.");
-      return;
-    } else {
-      playerChoice = playerChoice.toUpperCase();
-    }
+function playGame(e) {
+  const playerChoice = e.target.value;
+  const computerChoice = getComputerChoice();
 
-    playRound(playerChoice, computerChoice);
-  }
-  scoreValidation(score.playerScore, score.computerScore);
+  playRound(playerChoice, computerChoice);
+  showResult(
+    playerChoice,
+    computerChoice,
+    score.playerScore,
+    score.computerScore
+  );
+  rmListener();
+  scoreValidation();
 }
 
-game();
+rpsBtns.forEach((btn) => btn.addEventListener("click", playGame));
+
+function rmListener() {
+  if (score.playerScore === 5 || score.computerScore === 5) {
+    rpsBtns.forEach((btn) => btn.removeEventListener("click", playGame));
+  }
+}
+
+function showResult(pChoice, cChoice, pScore, cScore) {
+  document.querySelector(
+    ".choices-result"
+  ).innerText = `Player Choice: ${pChoice} VS Computer Choice: ${cChoice}`;
+  document.querySelector(
+    ".score-result"
+  ).innerText = `Player Score: ${pScore}  | |  Computer Score: ${cScore}`;
+}
